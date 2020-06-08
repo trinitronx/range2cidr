@@ -31,6 +31,12 @@ execute_before_dh_install: $(HTML_DOCS)
 #override_dh_auto_configure:
 #	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
+execute_before_dh_clean:
+	$(MAKE) distclean
+
+override_dh_clean: clean
+	dh_clean
+
 clean::
 	rm $(HTML_DOCS) || true
 
