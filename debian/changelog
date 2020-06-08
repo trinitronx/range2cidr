@@ -1,3 +1,24 @@
+range2cidr (0.0.2-0focal1~ppa1~1.gbp6f8467) focal; urgency=medium
+
+  * Fix lintian warning: syntax-error-in-dep5-copyright
+  * Fix lintian warning: dep5-copyright-license-name-not-unique
+  * Fix paths to debian files
+  * Fix lintian warning: manpage-section-mismatch
+  * Fix lintian warning: doc-base-file-references-missing-file
+  * Makefile: List .PHONY targets
+  * Trying to fix debian/watch uscan patterns
+  * Trying to fix debian/rules
+  * Get *FLAGS vars from dpkg-buildflags
+  * Move source files to src/
+  * Switching to autoconf / automake
+  * Vendor autoconf-archive boost M4 templates
+  * bootstrap.sh: Run automake --install-missing
+  * Add autoconf / automake generated files to: make maintainer-clean target
+  * Embed COPYING & INSTALL files that automake wants into the repo
+  * Add gbp dch commands to README.source
+
+ -- James Cuzella <james.cuzella@lyraphase.com>  Mon, 08 Jun 2020 02:52:45 -0600
+
 range2cidr (0.0.1-1) focal; urgency=medium
 
   * Initial release
