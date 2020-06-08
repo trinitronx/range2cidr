@@ -7,7 +7,7 @@ Abstract: This manual describes what range2cidr is
 Section: Network/Monitoring
 
 Format: text
-Files: /usr/share/doc/range2cidr/README.md.gz
+Files: /usr/share/doc/range2cidr/README.md
 
 Format: HTML
 Index: /usr/share/doc/range2cidr/README.html
