@@ -31,12 +31,16 @@ execute_before_dh_install: $(HTML_DOCS)
 #override_dh_auto_configure:
 #	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
-execute_before_dh_clean:
+execute_after_dh_clean:
 	$(MAKE) distclean
 
 override_dh_clean: clean
 	dh_clean
 
+DEBUILD_CLEAN_DIRS := debian/.debhelper/ debian/range2cidr/
+DEBUILD_CLEAN_FILES := debian/debhelper-build-stamp debian/files debian/range2cidr.substvars
+
 clean::
 	rm $(HTML_DOCS) || true
-
+	rm $(DEBUILD_CLEAN_FILES) || true
+	rm -rf $(DEBUILD_CLEAN_DIRS) || true
