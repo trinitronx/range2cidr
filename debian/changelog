@@ -1,0 +1,5 @@
+range2cidr (0.0.1-1) unstable; urgency=medium
+
+  * Initial release
+
+ -- James Cuzella <james.cuzella@lyraphase.com>  Sun, 07 Jun 2020 19:44:31 -0600
