@@ -1,0 +1,8 @@
+.*.swp
+aclocal.m4
+autoscan.log
+compile
+config.h.in
+config.h.in~
+config.log
+config.status
