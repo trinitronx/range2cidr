@@ -2,6 +2,6 @@
 
 set -e # Drop-out from execution if error occurs
 
-aclocal && autoconf && automake -a
+aclocal && autoconf && automake -a --add-missing
 
 printf '\nSuccess!\nNow please run: ./autogen.sh\n'
