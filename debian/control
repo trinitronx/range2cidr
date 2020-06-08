@@ -1,0 +1,16 @@
+Source: range2cidr
+Section: net
+Priority: optional
+Maintainer: James Cuzella <james.cuzella@lyraphase.com>
+Build-Depends: debhelper-compat (= 12), libboost-dev
+Standards-Version: 4.4.1
+Homepage: https://diasp.org/posts/6608896
+Vcs-Git: https://github.com/trinitonx/range2cidr.git
+Vcs-Browser: https://github.com/trinitonx/range2cidr
+
+Package: range2cidr
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Convert iblocklist IP ranges to CIDR format
+ A program to convert iblocklist / bluetack style IP ranges
+ to CIDR format.
