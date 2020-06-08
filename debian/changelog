@@ -1,3 +1,12 @@
+range2cidr (0.0.3-0focal1~ppa1) focal; urgency=medium
+
+  * debian/rules: Cleanup even more files after build
+  * Add configure checks for boost library & headers
+  * debian/control: Add pandoc to Build-Depends for HTML README
+  * debian/control: Add git to Build-Depends for autoconf version discovery via git tags
+
+ -- James Cuzella <james.cuzella@lyraphase.com>  Mon, 08 Jun 2020 04:49:50 -0600
+
 range2cidr (0.0.2-0focal1~ppa1~1.gbp6f8467) focal; urgency=medium
 
   * Fix lintian warning: syntax-error-in-dep5-copyright
