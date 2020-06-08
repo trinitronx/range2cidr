@@ -19,15 +19,15 @@ AC_PROG_INSTALL
 #  AC_MSG_ERROR([unable to find string_ref()])
 #])
 
-#AX_BOOST_BASE([1.60], [], [
-#    AC_MSG_ERROR([unable to find boost::string_ref()])
-#  ])
-#AC_CHECK_LIB([boost], [string_ref], [LIBPTHREAD=true], [], [])
-
-
+AC_LANG_PUSH(C++)
+AX_BOOST_BASE([1.60], [], [
+    AC_MSG_ERROR([unable to find libboost])
+  ])
 
 # Checks for header files.
 AC_CHECK_HEADERS([arpa/inet.h netinet/in.h unistd.h])
+AC_CHECK_HEADERS([boost/utility/string_ref.hpp boost/range/algorithm/copy.hpp])
+AC_LANG_POP(C++)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_UINT32_T
