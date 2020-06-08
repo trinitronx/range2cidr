@@ -17,8 +17,20 @@
 %:
 	dh $@
 
+HTML_DOCS := README.html
+
+%.html: %.md
+	pandoc --from=markdown+smart --to=html --standalone --metadata=pagetitle="range2cidr $(basename $<)" --output=$@ $<
+
+execute_before_dh_install: $(HTML_DOCS)
+	@# Target cannot be empty, so no-op
+	:
+
 
 # This is example for Cmake (See https://bugs.debian.org/641051 )
 #override_dh_auto_configure:
 #	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
+
+clean::
+	rm $(HTML_DOCS) || true
 

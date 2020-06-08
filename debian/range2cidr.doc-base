@@ -1,0 +1,14 @@
+Document: range2cidr
+Title: Debian range2cidr Manual
+Author: James Cuzella
+Abstract: This manual describes what range2cidr is
+ and how it can be used to convert IP ranges to CIDR
+ notation.
+Section: Network/Monitoring
+
+Format: text
+Files: /usr/share/doc/range2cidr/README.md.gz
+
+Format: HTML
+Index: /usr/share/doc/range2cidr/README.html
+Files: /usr/share/doc/range2cidr/*.html
