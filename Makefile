@@ -1,9 +1,9 @@
 CC=gcc
 CXX=g++
 RM=rm -f
-CPPFLAGS=-g $(shell root-config --cflags)
-LDFLAGS=-g $(shell root-config --ldflags)
-LDLIBS=$(shell root-config --libs)
+CPPFLAGS=-g $(shell dpkg-buildflags --get CPPFLAGS)
+LDFLAGS=-g $(shell dpkg-buildflags --get LDFLAGS)
+#LDLIBS=$(shell root-config --libs)
 
 SRCS=range2cidr.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
