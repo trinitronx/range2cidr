@@ -20,3 +20,5 @@ clean:
 
 distclean: clean
 	$(RM) range2cidr
+
+.PHONY: all install clean distclean uninstall
