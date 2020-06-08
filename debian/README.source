@@ -1,0 +1,101 @@
+range2cidr for Debian
+--------------------
+
+This package is managed via Git repo & git-buildpackage.
+
+## General guidelines from Debian policy manual:
+
+1. Generate the fully patched source, in a form ready for editing, that would be built to create Debian packages. Doing this with a patch target in debian/rules is recommended; see Main building script: debian/rules.
+2. Modify the source and save those modifications so that they will be applied when building the package.
+3. Remove source modifications that are currently being applied when building the package.
+4. Optionally, document what steps are necessary to upgrade the Debian source package to a new upstream version, if applicable.
+
+Debian policy manual section 4.14
+
+## Building the Source Package
+
+### Steps:
+
+ - Install Debian build tools:
+
+         sudo apt-get install dh-make build-essential devscripts lintian dpkg dpkg-dev git-buildpackage
+
+ - Configure Debian build tools:
+
+    # Set name and email for use by debchange/dch and other debian tools
+    # Also set key for signing
+    # See Debian Maintainer's Guide:
+    # http://www.debian.org/doc/maint-guide/ch-build.en.html
+    cat >>~/.bashrc <<EOF
+    DEBEMAIL="person@company.tld"
+    DEBFULLNAME="Testy McTester"
+    DEBSIGN_KEYID='0x00000000' # Your GPG key
+    DEBUILD_DPKG_BUILDPACKAGE_OPTS="-sa -k${DEBSIGN_KEYID}"
+    DEBUILD_LINTIAN_OPTS='-i -I --show-overrides'
+    EDITOR="vim"
+    QUILT_PATCHES=debian/patches
+    QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
+    export DEBEMAIL DEBFULLNAME DEBSIGN_KEYID EDITOR QUILT_PATCHES \
+      DEBUILD_DPKG_BUILDPACKAGE_OPTS DEBUILD_LINTIAN_OPTS QUILT_REFRESH_ARGS
+    EOF
+    source ~/.bashrc
+
+## Updating the Source Package
+
+Over time, there will be improvements and changes in the upstream git SCM repo.
+To maintain this package and keep it updated, we need to pull down the repo.
+
+ - Get the Debian Packaging Source Repo:
+
+    git clone https://github.com/trinitronx/range2cidr.git && cd range2cidr
+    git checkout master
+
+ - Optional: Activate upstream Git repo to get latest master:
+
+    # Uncomment lines in debian/watch or verify it has mode=git stanza enabled
+    # master HEAD
+    opts="mode=git, dversionmangle=s/\+dfsg\.\d+$//, uversionmangle=s/^v//, pretty=describe" \
+    https://github.com/trinitronx/range2cidr.git \
+    heads/master debian uupdate
+
+ - Edit `debian/changelog`:
+   - Optional: use `gbp dch` tool to assist in adding changelog entries from git
+
+        # Check the version string from uscan result orig.tar.xz above
+        # Place it at the beginning of the --new-version string
+        # Omit the --snapshot flag to create a release when you're ready
+        gbp dch --debian-branch=master \
+          --new-version=0.0.1-1$(lsb_release -cs)1~ppa1 \
+          --snapshot \
+          --distribution=$(lsb_release -cs ) --dch-opt='-b'
+
+ - Build source package:
+
+        debuild -S
+
+ - Optional: Build binary package
+
+        debuild
+
+ - Optional: Test binary package build with pbuilder
+   - This can help diagnose build issues on Launchpad / Soyuz / launchpad-buildd
+   - First create a pbuilder environment for your distro release
+
+        sudo pbuilder create --distribution $(lsb_release -cs) \
+          --othermirror "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) main restricted universe multiverse"
+
+   - Once that finishes, try a build:
+
+        pbuilder-dist $(lsb_release -cs)  build ../projectm_0.0.1-1focal1~ppa1~1.gbpcc0de.dsc
+
+ - When ready to release to the PPA, cut a non-SNAPSHOT release
+   - Follow same steps above if using `gbp dch`, without `--snapshot`
+   - Alternatively, change `UNRELEASED` in `debian/changelog` to the release
+ - Then, upload the `.changes` file to Ubuntu Launchpad / Soyuz
+
+        dput ppa:trinitronx/rtorrent ../rtorrent_0.0.1-1focal1~ppa1~1.gbpcc0de_source.changes
+
+ - Wait for the build to complete, et voila!
+
+ -- James Cuzella <james.cuzella@lyraphase.com>  Sun, 07 Jun 2020 19:44:31 -0600
+
