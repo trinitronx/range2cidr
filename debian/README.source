@@ -65,9 +65,14 @@ To maintain this package and keep it updated, we need to pull down the repo.
         # Place it at the beginning of the --new-version string
         # Omit the --snapshot flag to create a release when you're ready
         gbp dch --debian-branch=master \
-          --new-version=0.0.1-1$(lsb_release -cs)1~ppa1 \
+          --new-version=0.0.2-1$(lsb_release -cs)1~ppa1 \
           --snapshot \
           --distribution=$(lsb_release -cs ) --dch-opt='-b'
+        # Or automatic version based on last tag:
+        gbp dch --new-version=$(git describe --abbrev=0 --dirty --always --tags | sed -e s/^v//)-1$(lsb_release -cs)1~ppa1 \
+          --snapshot \
+          --distribution=$(lsb_release -cs)
+
 
  - Build source package:
 
