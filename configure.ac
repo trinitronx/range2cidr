@@ -67,6 +67,11 @@ AC_MSG_NOTICE([
       C99 header stdbool.h: .......... ${ac_cv_header_stdbool_h}
       C99 restrict keyword: .......... ${ac_cv_c_restrict}
       C99 uint32_t: .................. ${ac_cv_c_uint32_t}
+    Header checks:
+      popt.h: ........................ ${ac_cv_header_popt_h}
+    Library checks:
+      libpopt poptGetContext(): ...... ${ac_cv_lib_popt_poptGetContext}
+      libpopt poptGetArg(): .......... ${ac_cv_lib_popt_poptGetArg}
     General configuration:
       Enable popt options lib: ....... ${ac_cv_header_popt_h}
 ------------------------------------------------------------------------
