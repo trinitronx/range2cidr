@@ -25,6 +25,9 @@ AX_IS_RELEASE([git-directory])
 AX_COMPILER_FLAGS([], [], [$ax_is_release])
 
 # Checks for libraries.
+AC_CHECK_LIB(popt, poptGetContext,,
+	[AC_MSG_ERROR([You need popt 1.7 or newer to compile.])])
+
 #AC_CHECK_LIB(c, dlopen, LIBDL="", AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl"))
 #AC_SEARCH_LIBS([string_ref], [boost], [], [
 #  AC_MSG_ERROR([unable to find string_ref()])
@@ -38,9 +41,15 @@ AX_BOOST_BASE([1.60], [], [
 # Checks for header files.
 AC_CHECK_HEADERS([arpa/inet.h netinet/in.h unistd.h])
 AC_CHECK_HEADERS([boost/utility/string_ref.hpp boost/range/algorithm/copy.hpp])
+AC_CHECK_HEADER([popt.h],
+    [AC_DEFINE([HAVE_POPT_H], [1],
+      [Define to 1 if you have <popt.h>.])],
+    [AC_MSG_ERROR([unable to find libpopt])])
 AC_LANG_POP(C++)
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADER_STDBOOL
+AC_C_RESTRICT
 AC_TYPE_UINT32_T
 
 # Checks for library functions.
@@ -48,3 +57,17 @@ AC_CHECK_FUNCS([inet_ntoa])
 
 AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
+
+AC_MSG_NOTICE([
+------------------------------------------------------------------------
+  $PACKAGE_NAME $PACKAGE_VERSION:  Automatic configuration OK.
+    Compiler support:
+      C99 header stdbool.h: .......... ${ac_cv_header_stdbool_h}
+      C99 restrict keyword: .......... ${ac_cv_c_restrict}
+      C99 uint32_t: .................. ${ac_cv_c_uint32_t}
+    General configuration:
+      Enable popt options lib: ....... ${ac_cv_header_popt_h}
+------------------------------------------------------------------------
+ Type "make; make install" to compile and install
+ Type "make check" to run the test suite
+])
