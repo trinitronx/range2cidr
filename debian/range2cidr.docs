@@ -1,3 +1,4 @@
 debian/README.source
 README.md
 README.html
+docs/range2cidr.1
