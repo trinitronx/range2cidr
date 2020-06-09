@@ -27,6 +27,8 @@ AX_COMPILER_FLAGS([], [], [$ax_is_release])
 # Checks for libraries.
 AC_CHECK_LIB(popt, poptGetContext,,
 	[AC_MSG_ERROR([You need popt 1.7 or newer to compile.])])
+AC_CHECK_LIB([popt], [poptGetArg], [popt_links=yes],
+             [AC_MSG_ERROR([You need popt 1.7 or newer to compile.])])
 
 #AC_CHECK_LIB(c, dlopen, LIBDL="", AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl"))
 #AC_SEARCH_LIBS([string_ref], [boost], [], [

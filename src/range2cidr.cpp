@@ -127,17 +127,9 @@ int main (int argc, char* argv[]) {
     if (ch < -1) {
         // the user specified an invalid option, tell them
         poptPrintHelp(opt_con, stderr, 0);
+        exit(EXIT_FAILURE);
     }
 
-    /* non-option args */
-    while ((extra_arg = (char *)poptGetArg(opt_con))) {
-        printf("extra arg: %s\n", extra_arg);
-        exit(1);
-    }
-
-
-    /* cleanup */
-    poptFreeContext(opt_con);
 
     verbose("(%s:%d) s = '%s'\n",__FILE__,__LINE__,f);
     verbose("(%s:%d) v = %d\n",__FILE__,__LINE__,getVerbose());
@@ -155,10 +147,25 @@ int main (int argc, char* argv[]) {
 		}
 	}
 	else {
-		for (int z = 1; z < argc; ++z) {
-			print_range(string_ref(argv[z]));
-		}
-	}
+#if HAVE_LIBPOPT
+    /* non-option args */
+    while ((extra_arg = (char *)poptGetArg(opt_con))) {
+        verbose("extra arg: %s\n", extra_arg);
+        print_range(string_ref(extra_arg));
+    }
+
+
+    /* cleanup */
+    poptFreeContext(opt_con);
+#else
+        for (int z = 1; z < argc; ++z) {
+            verbose("argc:    %d\n",argc);
+            verbose("argv:    %s\n",*argv);
+            verbose("argv[z]: %s\n",argv[z]);
+            print_range(string_ref(argv[z]));
+        }
+#endif
+    }
  
 	return 0;
 }
