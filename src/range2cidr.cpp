@@ -88,7 +88,7 @@ namespace {
 
 int main (int argc, char* argv[]) {
 #ifdef HAVE_LIBPOPT
-    printf("(%s:%d) whee...we have popt.h\n",__FILE__,__LINE__);
+    verbose("(%s:%d) whee...we have popt.h\n",__FILE__,__LINE__);
     /* option parsing variables */
     char ch;
     poptContext opt_con;   /* context for parsing command-line options */
@@ -107,13 +107,13 @@ int main (int argc, char* argv[]) {
     verbose("Verbose is off\n");
     /* Now do options processing */
     while ((ch = poptGetNextOpt(opt_con)) >= 0) {
-        printf("between while & switch: ch = %c\n", ch);
+        verbose("between while & switch: ch = %c\n", ch);
         switch (ch) {
             case 'f':
-                    printf("handling 'f' option.\n");
+                    verbose("handling 'f' option.\n");
                     break;
             case 'v':
-                    printf("handling 'v' option.\n");
+                    verbose("handling 'v' option.\n");
                     setVerbose(true);
                     verbose("Verbose is on\n");
                     break;
@@ -139,10 +139,10 @@ int main (int argc, char* argv[]) {
     /* cleanup */
     poptFreeContext(opt_con);
 
-    printf("(%s:%d) s = '%s'\n",__FILE__,__LINE__,f);
-    printf("(%s:%d) v = %d\n",__FILE__,__LINE__,getVerbose());
+    verbose("(%s:%d) s = '%s'\n",__FILE__,__LINE__,f);
+    verbose("(%s:%d) v = %d\n",__FILE__,__LINE__,getVerbose());
 #else
-	printf("(%s:%d) rats...we don't have popt.h\n",__FILE__,__LINE__);
+	verbose("(%s:%d) rats...we don't have popt.h\n",__FILE__,__LINE__);
 #endif
 
 	using std::string;
