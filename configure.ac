@@ -9,6 +9,8 @@ AC_INIT([range2cidr], [m4_esyscmd_s(build-aux/git-version-gen .tarball-version)]
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_SUBST(AC_BUILD_AUX_DIR, 'build-aux')
 
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects tar-pax])
 

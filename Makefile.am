@@ -12,3 +12,10 @@ dist-hook:
 	echo $(VERSION) > $(distdir)/.tarball-version
 	echo $(VERSION) > $(distdir)/.version
 
+# Clean all files autoreconf poops out
+GITCLEANFILES = Makefile.in src/Makefile.in \
+				$(AC_BUILD_AUX_DIR)/config.guess $(AC_BUILD_AUX_DIR)/config.sub configure \
+				$(AC_BUILD_AUX_DIR)/depcomp $(AC_BUILD_AUX_DIR)/install-sh \
+				$(AC_BUILD_AUX_DIR)/missing
+clean-local-am: maintainer-clean maintainer-clean-am
+	$(RM) $(GITCLEANFILES)
