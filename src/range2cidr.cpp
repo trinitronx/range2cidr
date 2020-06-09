@@ -17,6 +17,9 @@
 #include <stdbool.h>
 #include "verbose.h"
 
+PACKAGE_COPYRIGHT
+PACKAGE_LICENSE
+
 namespace {
 	uint32_t ipv4_to_uint (boost::string_ref parIP) {
 		const auto max_ip_str_len = 3 * 4 + 3 + 1;
@@ -98,6 +101,7 @@ int main (int argc, char* argv[]) {
     static struct poptOption options_table[] = {
         { "file", 'f', POPT_ARG_STRING, &f, 'f', "read IP range input from file", "STRING" },
         { "verbose", 'v', POPT_ARG_NONE, NULL, 'v', "enable verbose", "" },
+        { "version", 'V', POPT_ARG_NONE, NULL, 'V', "display version", "" },
         POPT_AUTOHELP
         { NULL, 0, 0, NULL, 0 } /* end-of-list terminator */
     };
@@ -116,6 +120,11 @@ int main (int argc, char* argv[]) {
                     verbose("handling 'v' option.\n");
                     setVerbose(true);
                     verbose("Verbose is on\n");
+                    break;
+            case 'V':
+                    verbose("handling 'V' option.\n");
+                    printf("%s\n\t%s\n\n%s",PACKAGE_STRING,COPYRIGHT,LICENSE);
+                    exit(EXIT_SUCCESS);
                     break;
             default:
                     printf("unknown option '%c'.\n",ch);
