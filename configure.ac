@@ -8,13 +8,19 @@ AC_INIT([range2cidr], [m4_esyscmd_s(build-aux/git-version-gen .tarball-version)]
 
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects tar-pax])
+AC_CONFIG_MACRO_DIR([m4])
 
+AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects tar-pax])
 
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
+
+# Set WARN_CXXFLAGS dependent on release
+# See: https://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html
+AX_IS_RELEASE([git-directory])
+AX_COMPILER_FLAGS([], [], [$ax_is_release])
 
 # Checks for libraries.
 #AC_CHECK_LIB(c, dlopen, LIBDL="", AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl"))
