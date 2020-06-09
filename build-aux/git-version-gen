@@ -1,13 +1,13 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2010-06-14.19; # UTC
+scriptversion=2012-09-25.20
 
-# Copyright (C) 2007-2010 Free Software Foundation, Inc.
+# Copyright (C) 2007-2008 Free Software Foundation
 #
-# This program is free software: you can redistribute it and/or modify
+# This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,7 +15,7 @@ scriptversion=2010-06-14.19; # UTC
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 # This script is derived from GIT-VERSION-GEN from GIT: http://git.or.cz/.
 # It may be run two ways:
@@ -65,20 +65,16 @@ scriptversion=2010-06-14.19; # UTC
 #	echo $(VERSION) > $@-t && mv $@-t $@
 # dist-hook:
 #	echo $(VERSION) > $(distdir)/.tarball-version
+#	echo $(VERSION) > $(distdir)/.version
 
 case $# in
-    1|2) ;;
-    *) echo 1>&2 "Usage: $0 \$srcdir/.tarball-version" \
-         '[TAG-NORMALIZATION-SED-SCRIPT]'
-       exit 1;;
+    1) ;;
+    *) echo 1>&2 "Usage: $0 \$srcdir/.tarball-version"; exit 1;;
 esac
 
 tarball_version_file=$1
-tag_sed_script="${2:-s/x/x/}"
 nl='
 '
-
-# Avoid meddling by environment variable of the same name.
 v=
 
 # First see if there is a tarball-only version file.
@@ -88,53 +84,73 @@ then
     v=`cat $tarball_version_file` || exit 1
     case $v in
 	*$nl*) v= ;; # reject multi-line output
-	[0-9]*) ;;
+	[0-9]*)
+		echo "$v" | tr -d '\012'
+		exit 0
+		;;
 	*) v= ;;
     esac
     test -z "$v" \
 	&& echo "$0: WARNING: $tarball_version_file seems to be damaged" 1>&2
 fi
 
+# This is presently used by the GNOME-OSTree build system; it
+# helps support the case where the meta-build system has already
+# determined the git revision, but we may not be able to run "git describe"
+# because we're inside a chroot.
+if test -n "$GIT_DESCRIBE_FOR_BUILD";
+then
+    v=$GIT_DESCRIBE_FOR_BUILD
+fi
+
 if test -n "$v"
 then
     : # use $v
-elif test -d .git \
-    && v=`git describe --abbrev=4 --match='v*' HEAD 2>/dev/null \
-	  || git describe --abbrev=4 HEAD 2>/dev/null` \
-    && v=`printf '%s\n' "$v" | sed "$tag_sed_script"` \
-    && case $v in
-	 v[0-9]*) ;;
-	 *) (exit 1) ;;
-       esac
+elif test -e .git \
+    && v=`git describe --abbrev=4 --match='v[0-9]*' HEAD 2>/dev/null` \
+    && [ -n "$v" ]
 then
+    # If we are on a "dev" tag, we need to check that it is not the same
+    # reference as the a previous version tag (this only happens when we are
+    # working with a release tag).
+    # NB The below trick relies on the $v being an exact tag to work which
+    # will only work when HEAD == tag. When further commits have been made on top
+    # of the tag, the $v will be supplimented with the number of commits since
+    # that tag and the commit ref of the most recent commit and thus will
+    # fail the test below (as intended)
+    v2=`git describe --abbrev=4 --match='v[0-9]\.[0-9]' --contains $v 2>/dev/null | cut -d'^' -f1`
+    [ -n "$v2" ] && v=$v2
+
     # Is this a new git that lists number of commits since the last
     # tag or the previous older version that did not?
     #   Newer: v6.10-77-g0f8faeb
     #   Older: v6.10-g0f8faeb
-    case $v in
-	*-*-*) : git describe is okay three part flavor ;;
-	*-*)
-	    : git describe is older two part flavor
-	    # Recreate the number of commits and rewrite such that the
-	    # result is the same as if we were using the newer version
-	    # of git describe.
-	    vtag=`echo "$v" | sed 's/-.*//'`
-	    numcommits=`git rev-list "$vtag"..HEAD | wc -l`
-	    v=`echo "$v" | sed "s/\(.*\)-\(.*\)/\1-$numcommits-\2/"`;
-	    ;;
-    esac
+#    case $v in
+#	*-*-*) : git describe is okay three part flavor ;;
+#	*-*)
+#	    : git describe is older two part flavor
+#	    # Recreate the number of commits and rewrite such that the
+#	    # result is the same as if we were using the newer version
+#	    # of git describe.
+#	    vtag=`echo "$v" | sed 's/-.*//'`
+#	    numcommits=`git rev-list "$vtag"..HEAD | wc -l`
+#	    v=`echo "$v" | sed "s/\(.*\)-\(.*\)/\1-$numcommits-\2/"`;
+#	    ;;
+#    esac
 
     # Change the first '-' to a '.', so version-comparing tools work properly.
     # Remove the "g" in git describe's output string, to save a byte.
-    v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
+#    v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
+    :
 else
-    v=UNKNOWN
+    echo 1>&2 "$0: Failed to determine git revision"
+    exit 1
 fi
 
 v=`echo "$v" |sed 's/^v//'`
 
 # Don't declare a version "dirty" merely because a time stamp has changed.
-git update-index --refresh > /dev/null 2>&1
+git status > /dev/null 2>&1
 
 dirty=`sh -c 'git diff-index --name-only HEAD' 2>/dev/null` || dirty=
 case "$dirty" in
@@ -147,12 +163,11 @@ case "$dirty" in
 esac
 
 # Omit the trailing newline, so that m4_esyscmd can use the result directly.
-echo "$v" | tr -d "$nl"
+echo "$v" | tr -d '\012'
 
 # Local variables:
 # eval: (add-hook 'write-file-hooks 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
-# time-stamp-time-zone: "UTC"
-# time-stamp-end: "; # UTC"
+# time-stamp-end: "$"
 # End:
