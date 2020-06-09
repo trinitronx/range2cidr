@@ -1,3 +1,4 @@
+#include "config.h"
 #include <string>
 #include <iostream>
 #include <netinet/in.h>
@@ -10,7 +11,15 @@
 #include <unistd.h>
 #include <boost/range/algorithm/copy.hpp>
 #include <ciso646>
- 
+#ifdef HAVE_POPT_H
+#include <popt.h>
+#endif
+#include <stdbool.h>
+#include "verbose.h"
+
+PACKAGE_COPYRIGHT
+PACKAGE_LICENSE
+
 namespace {
 	uint32_t ipv4_to_uint (boost::string_ref parIP) {
 		const auto max_ip_str_len = 3 * 4 + 3 + 1;
@@ -78,7 +87,65 @@ namespace {
 	}
 } //unnamed namespace
  
+
+
 int main (int argc, char* argv[]) {
+#ifdef HAVE_LIBPOPT
+    verbose("(%s:%d) whee...we have popt.h\n",__FILE__,__LINE__);
+    /* option parsing variables */
+    char ch;
+    poptContext opt_con;   /* context for parsing command-line options */
+    char *extra_arg;
+    static const char *f="";
+
+    static struct poptOption options_table[] = {
+        { "file", 'f', POPT_ARG_STRING, &f, 'f', "read IP range input from file", "STRING" },
+        { "verbose", 'v', POPT_ARG_NONE, NULL, 'v', "enable verbose", "" },
+        { "version", 'V', POPT_ARG_NONE, NULL, 'V', "display version", "" },
+        POPT_AUTOHELP
+        { NULL, 0, 0, NULL, 0 } /* end-of-list terminator */
+    };
+
+    opt_con = poptGetContext(NULL, argc, (const char **)argv, options_table, 0);
+
+    verbose("Verbose is off\n");
+    /* Now do options processing */
+    while ((ch = poptGetNextOpt(opt_con)) >= 0) {
+        verbose("between while & switch: ch = %c\n", ch);
+        switch (ch) {
+            case 'f':
+                    verbose("handling 'f' option.\n");
+                    break;
+            case 'v':
+                    verbose("handling 'v' option.\n");
+                    setVerbose(true);
+                    verbose("Verbose is on\n");
+                    break;
+            case 'V':
+                    verbose("handling 'V' option.\n");
+                    printf("%s\n\t%s\n\n%s",PACKAGE_STRING,COPYRIGHT,LICENSE);
+                    exit(EXIT_SUCCESS);
+                    break;
+            default:
+                    printf("unknown option '%c'.\n",ch);
+                    exit(EXIT_FAILURE);
+                    break;
+        }
+    }
+
+    if (ch < -1) {
+        // the user specified an invalid option, tell them
+        poptPrintHelp(opt_con, stderr, 0);
+        exit(EXIT_FAILURE);
+    }
+
+
+    verbose("(%s:%d) s = '%s'\n",__FILE__,__LINE__,f);
+    verbose("(%s:%d) v = %d\n",__FILE__,__LINE__,getVerbose());
+#else
+	verbose("(%s:%d) rats...we don't have popt.h\n",__FILE__,__LINE__);
+#endif
+
 	using std::string;
 	using boost::string_ref;
  
@@ -89,10 +156,25 @@ int main (int argc, char* argv[]) {
 		}
 	}
 	else {
-		for (int z = 1; z < argc; ++z) {
-			print_range(string_ref(argv[z]));
-		}
-	}
+#if HAVE_LIBPOPT
+    /* non-option args */
+    while ((extra_arg = (char *)poptGetArg(opt_con))) {
+        verbose("extra arg: %s\n", extra_arg);
+        print_range(string_ref(extra_arg));
+    }
+
+
+    /* cleanup */
+    poptFreeContext(opt_con);
+#else
+        for (int z = 1; z < argc; ++z) {
+            verbose("argc:    %d\n",argc);
+            verbose("argv:    %s\n",*argv);
+            verbose("argv[z]: %s\n",argv[z]);
+            print_range(string_ref(argv[z]));
+        }
+#endif
+    }
  
 	return 0;
 }

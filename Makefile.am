@@ -1,10 +1,21 @@
 
 ACLOCAL_AMFLAGS=-I m4
 SUBDIRS=src
-CC=gcc
-CXX=g++
 RM=rm -f
-#AM_CPPFLAGS=-g $(shell dpkg-buildflags --get CPPFLAGS)
-#LDFLAGS=-g $(shell dpkg-buildflags --get LDFLAGS)
-#LDLIBS=$(shell root-config --libs)
-MAINTAINERCLEANFILES = Makefile.in autom4te.cache/ configure depcomp install-sh missing src/Makefile.in
+MAINTAINERCLEANFILES = .tarball-version .version
+
+# See build-aux/git-version-gen script for details on .*version file usage
+BUILT_SOURCES = $(top_srcdir)/.version
+$(top_srcdir)/.version:
+	echo $(VERSION) > $@-t && mv $@-t $@
+dist-hook:
+	echo $(VERSION) > $(distdir)/.tarball-version
+	echo $(VERSION) > $(distdir)/.version
+
+# Clean all files autoreconf poops out
+GITCLEANFILES = Makefile.in src/Makefile.in \
+				$(AC_BUILD_AUX_DIR)/config.guess $(AC_BUILD_AUX_DIR)/config.sub configure \
+				$(AC_BUILD_AUX_DIR)/depcomp $(AC_BUILD_AUX_DIR)/install-sh \
+				$(AC_BUILD_AUX_DIR)/missing
+clean-local-am: maintainer-clean maintainer-clean-am
+	$(RM) $(GITCLEANFILES)

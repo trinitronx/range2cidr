@@ -1,0 +1,135 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" (C) Copyright 2020 James Cuzella <james.cuzella@lyraphase.com>,
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH RANGE2CIDR 1 "June  9 2020"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+range2cidr \- program to convert iblocklist IP ranges to CIDR format
+.SH SYNOPSIS
+.B range2cidr
+.RI [ options ] " IP-RANGE" ...
+.br
+.B range2cidr
+.RI [ options ] " < files" ...
+.br
+cat files... |
+.B range2cidr
+.SH DESCRIPTION
+This manual page documents briefly the
+.B range2cidr
+command.
+.PP
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics,
+.\" respectively.
+\fBrange2cidr\fP is a program that converts iblocklist / bluetack style
+IP ranges to CIDR format.
+.SH INTRODUCTION
+This program takes input as IP ranges with dash separated (`-') pairs,
+and converts these into their equivalent CIDR range notation(s).
+
+For example:
+.TP
+ IP-RANGE
+.RS 10
+ => CIDR(s)
+.RE
+.TP
+ 1.22.65.175-1.22.65.175
+.RS 10
+ => 1.22.65.175/32
+.RE
+.TP
+ 192.168.0.0-192.168.255.255
+.RS 10
+ => 192.168.0.0/16
+.RE
+.TP
+ 86.66.128.0-86.70.225.255
+.RS 10
+ => 86.66.128.0/17
+    86.67.0.0/16
+    86.68.0.0/15
+    86.70.0.0/17
+    86.70.128.0/18
+    86.70.192.0/19
+    86.70.224.0/23
+.RE
+.SH OPTIONS
+This program follows the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+For a complete description, see the Info files.
+.PP
+.I range2cidr
+accepts the following options.
+.TP
+.PD 0
+.TP
+.B \-h, \-\-help
+Show summary of options.
+.TP
+.B \-V, \-\-version
+Show version of program.
+.TP
+.BI \-f " filename"
+.TP
+.PD
+.BI \-\^\-file " filename"
+.TP
+.PD
+.BI \-\^\-file "=filename"
+Read the IP range input from the file
+.IR filename ,
+instead of from the first command line argument.
+.br
+Multiple
+.B \-f
+(or
+.BR \-\^\-file )
+options may be used.
+.TP
+.PD 0
+.BI \-?
+.TP
+.PD
+.BI \-\^\-help
+.TP
+.PD
+.BI \-\^\-usage
+Display brief usage message
+.SH SEE ALSO
+.BR ipcalc (1),
+.BR sipcalc (1).
+.SH AUTHOR
+.br
+Michele Santullo
+.RS 4
+range2cidr creator.
+.RE
+James Cuzella
+.RS 4
+modifications to support command line flags, autotools integration, and Debian packaging.
+.RE
+.SH COPYRIGHT
+.br
+Copyright © 2017 Michele Santullo
+Copyright © 2020 James Cuzella
+.RE
+.br
+This manual page was written by James Cuzella <james.cuzella@lyraphase.com>, for the Debian project (and may be used by others).
+
