@@ -4,7 +4,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH range2cidr 1 "June  7 2020"
+.TH RANGE2CIDR 1 "June  9 2020"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -74,12 +74,44 @@ This program follows the usual GNU command line syntax, with long
 options starting with two dashes (`-').
 A summary of options is included below.
 For a complete description, see the Info files.
+.PP
+.I range2cidr
+accepts the following options.
+.TP
+.PD 0
 .TP
 .B \-h, \-\-help
 Show summary of options.
 .TP
-.B \-v, \-\-version
+.B \-V, \-\-version
 Show version of program.
+.TP
+.BI \-f " filename"
+.TP
+.PD
+.BI \-\^\-file " filename"
+.TP
+.PD
+.BI \-\^\-file "=filename"
+Read the IP range input from the file
+.IR filename ,
+instead of from the first command line argument.
+.br
+Multiple
+.B \-f
+(or
+.BR \-\^\-file )
+options may be used.
+.TP
+.PD 0
+.BI \-?
+.TP
+.PD
+.BI \-\^\-help
+.TP
+.PD
+.BI \-\^\-usage
+Display brief usage message
 .SH SEE ALSO
 .BR ipcalc (1),
 .BR sipcalc (1).
@@ -89,6 +121,15 @@ Michele Santullo
 .RS 4
 range2cidr creator.
 .RE
+James Cuzella
+.RS 4
+modifications to support command line flags, autotools integration, and Debian packaging.
+.RE
 .SH COPYRIGHT
 .br
-Copyright © 2017
+Copyright © 2017 Michele Santullo
+Copyright © 2020 James Cuzella
+.RE
+.br
+This manual page was written by James Cuzella <james.cuzella@lyraphase.com>, for the Debian project (and may be used by others).
+
