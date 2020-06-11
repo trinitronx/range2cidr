@@ -16,6 +16,7 @@ dist-hook:
 GITCLEANFILES = Makefile.in src/Makefile.in \
 				$(AC_BUILD_AUX_DIR)/config.guess $(AC_BUILD_AUX_DIR)/config.sub configure \
 				$(AC_BUILD_AUX_DIR)/depcomp $(AC_BUILD_AUX_DIR)/install-sh \
-				$(AC_BUILD_AUX_DIR)/missing
+				$(AC_BUILD_AUX_DIR)/missing $(AC_BUILD_AUX_DIR)/compile \
+				aclocal.m4 autoscan.log config.h.in
 clean-local-am: maintainer-clean maintainer-clean-am
 	$(RM) $(GITCLEANFILES)
