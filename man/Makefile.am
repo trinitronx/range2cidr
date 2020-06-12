@@ -1,1 +1,1 @@
-man_MANS = range2cidr.1
+dist_man_MANS = range2cidr.1
