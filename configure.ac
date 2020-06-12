@@ -17,7 +17,9 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects tar-pax])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_AWK
 AC_PROG_INSTALL
+AC_PROG_MKDIR_P
 
 # Set WARN_CXXFLAGS dependent on release
 # See: https://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html

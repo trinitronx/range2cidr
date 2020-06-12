@@ -1,4 +1,4 @@
-#include "config.h"
+#include <global.h>
 #include <string>
 #include <iostream>
 #include <netinet/in.h>
@@ -15,7 +15,6 @@
 #include <popt.h>
 #endif
 #include <stdbool.h>
-#include "verbose.h"
 
 PACKAGE_COPYRIGHT
 PACKAGE_LICENSE

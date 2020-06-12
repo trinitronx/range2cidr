@@ -5,7 +5,7 @@
 bin_PROGRAMS = range2cidr
 range2cidr_PROGRAM  = range2cidr
 
-noinst_HEADERS      = verbose.h
+noinst_HEADERS      = verbose.h global.h
 range2cidr_SOURCES  = range2cidr.cpp verbose.cpp
 range2cidr_CXXFLAGS = $(WARN_CXXFLAGS)
 range2cidr_LDFLAGS  = $(WARN_LDFLAGS)

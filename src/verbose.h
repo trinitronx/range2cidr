@@ -1,4 +1,3 @@
-#include "config.h"
 #include <stdbool.h>
 
 /* Define the package copyright notice. */

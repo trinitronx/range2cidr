@@ -1,5 +1,4 @@
-#include "config.h"
-#include "verbose.h"
+#include <global.h>
 #include <stdbool.h>
 #include <stdarg.h>
 #include <stdio.h>
