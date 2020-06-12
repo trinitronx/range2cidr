@@ -1,6 +1,6 @@
 
 ACLOCAL_AMFLAGS=-I m4
-SUBDIRS=src
+SUBDIRS=src man
 RM=rm -f
 MAINTAINERCLEANFILES = .tarball-version .version
 
@@ -13,7 +13,7 @@ dist-hook:
 	echo $(VERSION) > $(distdir)/.version
 
 # Clean all files autoreconf poops out
-GITCLEANFILES = Makefile.in src/Makefile.in \
+GITCLEANFILES = Makefile.in src/Makefile.in man/Makefile.in \
 				$(AC_BUILD_AUX_DIR)/config.guess $(AC_BUILD_AUX_DIR)/config.sub configure \
 				$(AC_BUILD_AUX_DIR)/depcomp $(AC_BUILD_AUX_DIR)/install-sh \
 				$(AC_BUILD_AUX_DIR)/missing $(AC_BUILD_AUX_DIR)/compile \
