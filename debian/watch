@@ -29,5 +29,4 @@ version=4
 
 # Direct Git Tags
 opts="mode=git, dversionmangle=s/\+dfsg\.\d+$//" https://github.com/trinitronx/range2cidr.git \
-  refs/tags/distribution/range2cidr-v([\d\.]+) debian uupdate
-
+  refs/tags/distribution/range2cidr-([\d\.]+) debian uupdate
