@@ -1,3 +1,53 @@
+range2cidr (0.0.9-1~focal~ppa1~1.gbp58f5c0) focal; urgency=medium
+
+  * Add GNOME version of git-version-gen script
+  * Switch to pulseaudio's git-version-gen script
+  * Hook autoconf & automake into using git-version-gen + .*version files
+  * Only remove .*version files during maintainer-clean target
+  * Vendor autoconf-archive AX_IS_RELEASE & AX_COMPILER_FLAGS M4 templates
+  * Hook up AX_IS_RELEASE & AX_COMPILER_FLAGS to automake CXXFLAGS, LDFLAGS
+  * Add clean-local-am autoreconf clean target
+  * Add initial popt implementation of command line flag parsing
+  * Replace all printf with new verbose() function
+  * Reimplement argv processing with ptopt when HAVE_LIBPOPT defined
+  * Add friendly configure output for Header & Library checks
+  * Add --version (-V) option with GPL-3+ notice
+  * Update manpage & pull it into upstream branch
+  * Move manpage to orig.tar.gz in upstream branch
+  * Add some missed files to clean during clean-local-am
+  * Use manpage from upstream branch (1ff4fa1)
+  * Add format attribute to verbose / printf variadic function call
+  * Add internal verbose.h to noinst_HEADERS (so make dist tarball will compile!)
+  * bootstrap.sh now calls autogen.sh - FULL initial autotools bootstrap
+  * Un-ignore autotools generated files required for source distribution
+  * Ignore autom4te.cache files
+  * Move manpage to man/ dir & tell autotools about it
+  * Ensure manpage is included in dist tarball
+  * Refactor autotools generated config.h includes
+  * Adding Roger Leigh's git-dist.mk Automake template from schroot project
+  * Fix GNU-ism in git-dist Makefile template
+  * Hook up git-dist Makefile.am include
+  * Link configure script revision to git-version-gen output
+  * Add GPL-3+ copyright notice to autotools input files
+  * Adding extra clean steps to dist-hook for pristine tarball
+  * .gitgnore all autotools generated files
+  * Switch uscan to distribution-$(PROJECT)-$(VERSION) tagging scheme from git-dist.mk
+  * Add git-chglog configs for nuuday/github-changelog-action
+  * Adding initial CHANGELOG.md
+  * fix(git-chglog): CHANGELOG GoTemplate now supports commit messages without special "type(scope): Subject" format
+  * feat(GitHub Actions): Adding GitHub Release Workflow
+  * feat: Adding HACKING.md docs about how to work on this repo
+  * fix(git-chglog): Regenerate CHANGELOG.md for the project from new template
+  * fix(automake): Setup EXTRA_DIST files for docs & GitHub Release workflow
+  * fix(debian/watch): Update refs/tags pattern for source distributions
+  * fix(automake): Add build-aux/git-version-gen script to EXTRA_DIST so Debian builds work
+  * feat(GitHub Actions): Fix github_ref version mangling
+  * fix(GitHub Actions): Fix warning Unexpected input 'tag', Fix tag_name to match distribution/* tag & draft prerelease
+  * fix(GitHub Actions): Empty changelog filename, Add version_ref & version for proper text mangling
+  * Distribution of range2cidr version 0.0.9
+
+ -- James Cuzella <james.cuzella@lyraphase.com>  Sat, 13 Jun 2020 05:39:49 -0600
+
 range2cidr (0.0.3-0focal1~ppa1) focal; urgency=medium
 
   * debian/rules: Cleanup even more files after build
