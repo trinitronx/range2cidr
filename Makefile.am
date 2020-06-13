@@ -1,5 +1,8 @@
 
 ACLOCAL_AMFLAGS=-I m4
+
+include $(top_srcdir)/build-aux/git-dist.mk
+
 SUBDIRS=src man
 RM=rm -f
 MAINTAINERCLEANFILES = .tarball-version .version
