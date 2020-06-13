@@ -1,10 +1,30 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
+#####################################################################
+# Copyright © 2020  James Cuzella <james.cuzella@lyraphase.com>
+#
+# range2cidr is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# range2cidr is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see
+# <http://www.gnu.org/licenses/>.
+#
+#####################################################################
 
 AC_PREREQ([2.69])
 AC_INIT([range2cidr], [m4_esyscmd_s(build-aux/git-version-gen .tarball-version)],
         [james.cuzella@lyraphase.com], [range2cidr],
         [https://github.com/trinitronx/range2cidr])
+
+AC_REVISION([Revision: m4_esyscmd_s(build-aux/git-version-gen .tarball-version)])
 
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
@@ -12,12 +32,35 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_SUBST(AC_BUILD_AUX_DIR, 'build-aux')
 
+AC_COPYRIGHT(
+[
+Copyright © 2020  James Cuzella <james.cuzella@lyraphase.com>
+
+range2cidr is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+range2cidr is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see
+<http://www.gnu.org/licenses/>.
+])
+
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects tar-pax])
 
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_AWK
 AC_PROG_INSTALL
+AC_PROG_MKDIR_P
+AC_PATH_PROG([FIND], [find])
+AC_PATH_PROG([XARGS], [xargs])
 
 # Set WARN_CXXFLAGS dependent on release
 # See: https://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html
@@ -57,7 +100,7 @@ AC_TYPE_UINT32_T
 # Checks for library functions.
 AC_CHECK_FUNCS([inet_ntoa])
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile man/Makefile])
 AC_OUTPUT
 
 AC_MSG_NOTICE([

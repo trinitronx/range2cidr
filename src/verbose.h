@@ -1,4 +1,3 @@
-#include "config.h"
 #include <stdbool.h>
 
 /* Define the package copyright notice. */
@@ -22,7 +21,7 @@
        "Public License version 3 can be found in \"/usr/share/common-licenses/GPL-3\".\n";
 
 // autotools generated config.h handles restrict keyword
-//int verbose(const char *format, ... ); //(until C99)
-int verbose(const char * restrict format, ... ); //(since C99)
+// GNU C++ compiler likes to have __attribute__ format for printf variadic calls
+int verbose(const char * restrict format, ... ) __attribute__ ((format (printf, 1, 2))); //(since C99)
 bool getVerbose(void);
 void setVerbose(bool);
