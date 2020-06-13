@@ -44,7 +44,7 @@ GIT_RELEASE_TAG_MESSAGE="Release of $(PACKAGE)-$(VERSION)"
 # GPG sign distribution tags
 GIT_DIST_TAG_SIGN=true
 # Branch to place distributed release on
-GIT_DIST_BRANCH="$(basename distribution-$(VERSION))"
+GIT_DIST_BRANCH="distribution-$(VERSION)"
 # Message for distribution commit
 GIT_DIST_COMMIT_MESSAGE="Distribution of $(PACKAGE) version $(VERSION)"
 # Naming scheme for distribution tags.  Note: must include $(VERSION)
