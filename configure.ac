@@ -59,6 +59,8 @@ AC_PROG_CC
 AC_PROG_AWK
 AC_PROG_INSTALL
 AC_PROG_MKDIR_P
+AC_PATH_PROG([FIND], [find])
+AC_PATH_PROG([XARGS], [xargs])
 
 # Set WARN_CXXFLAGS dependent on release
 # See: https://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html

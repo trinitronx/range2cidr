@@ -35,6 +35,9 @@ $(top_srcdir)/.version:
 dist-hook:
 	echo $(VERSION) > $(distdir)/.tarball-version
 	echo $(VERSION) > $(distdir)/.version
+# Remove junk from the generated tarball.
+	$(FIND) $(distdir) -name '#*' -print | $(XARGS) $(RM) -rf
+	$(FIND) $(distdir) -name '*~' -print | $(XARGS) $(RM) -rf
 
 # Clean all files autoreconf poops out
 GITCLEANFILES = Makefile.in src/Makefile.in man/Makefile.in \
