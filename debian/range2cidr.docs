@@ -1,4 +1,7 @@
 debian/README.source
 README.md
 README.html
-docs/range2cidr.1
+CHANGELOG.md
+CHANGELOG.html
+HACKING.md
+HACKING.html
