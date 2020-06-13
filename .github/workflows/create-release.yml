@@ -24,7 +24,7 @@ jobs:
         id: set_release_version_ref
         shell: bash
         run: |
-          version="v${github_ref/distribution\/range2cidr-/}"
+          version="${github_ref/distribution\/range2cidr-/v}"
           echo $version
           echo "::set-output name=version::$version"
         env:
