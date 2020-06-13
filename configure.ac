@@ -6,6 +6,8 @@ AC_INIT([range2cidr], [m4_esyscmd_s(build-aux/git-version-gen .tarball-version)]
         [james.cuzella@lyraphase.com], [range2cidr],
         [https://github.com/trinitronx/range2cidr])
 
+AC_REVISION([Revision: m4_esyscmd_s(build-aux/git-version-gen .tarball-version)])
+
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
