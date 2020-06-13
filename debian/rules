@@ -17,7 +17,7 @@
 %:
 	dh $@
 
-HTML_DOCS := README.html
+HTML_DOCS := README.html HACKING.html CHANGELOG.html
 
 %.html: %.md
 	pandoc --from=markdown+smart --to=html --standalone --metadata=pagetitle="range2cidr $(basename $<)" --output=$@ $<
