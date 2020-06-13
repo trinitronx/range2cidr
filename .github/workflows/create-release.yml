@@ -24,8 +24,10 @@ jobs:
         id: set_release_version_ref
         shell: bash
         run: |
-          version="${github_ref/distribution\/range2cidr-/v}"
+          version_ref="${github_ref/distribution\/range2cidr-/v}"
+          version="${version_ref/refs\/tags\//}"
           echo $version
+          echo "::set-output name=version_ref::$version_ref"
           echo "::set-output name=version::$version"
         env:
           github_ref: ${{ github.ref }}
@@ -37,7 +39,8 @@ jobs:
         with:
           config_dir: '.chglog'
           next_version: ""
-          args: "${{ steps.set_release_version_ref.outputs.version }}"
+          filename: ""
+          args: "${{ steps.set_release_version_ref.outputs.version_ref }}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
