@@ -13,18 +13,21 @@ version=4
 # debian/repack.stub: Wrapper for uupdate
 #   runs pandoc --extract-media, removes non-DFSG files & ICC color profiles
 
+# Disabled because github archives are not based on upstream branch
+# GNU Autotools creates releaseable distribution tarball via "make dist"
+
 # upstream HEAD
 # pretty=3.1.3+git%cd.%h,
-opts="mode=git, dversionmangle=s/\+dfsg\.\d+$//, uversionmangle=s/^v//, pretty=describe, oversionmangle=s/(.*)\.\d+/$1/" \
-  https://github.com/trinitronx/range2cidr.git \
-  heads/upstream debian uupdate
+#opts="mode=git, dversionmangle=s/\+dfsg\.\d+$//, uversionmangle=s/^v//, pretty=describe, oversionmangle=s/(.*)\.\d+/$1/" \
+#  https://github.com/trinitronx/range2cidr.git \
+#  heads/upstream debian uupdate
 
 # GitHub hosted projects
-opts="filenamemangle=s%(?:.*?)?v?(\d[\d.]*)\.tar\.gz%range2cidr-$1.tar.gz%"
-  https://github.com/trinitronx/range2cidr/tags \
-  (?:.*archive?/)?v?(\d[\d.]*)\.tar\.gz debian uupdate
+#opts="filenamemangle=s%(?:.*?)?v?(\d[\d.]*)\.tar\.gz%range2cidr-$1.tar.gz%"
+#  https://github.com/trinitronx/range2cidr/tags \
+#  (?:.*archive?/)?v?(\d[\d.]*)\.tar\.gz debian uupdate
 
 # Direct Git Tags
-#opts="mode=git, dversionmangle=s/\+dfsg\.\d+$//" https://github.com/trinitronx/range2cidr.git \
-#  refs/tags/v([\d\.]+) debian uupdate
+opts="mode=git, dversionmangle=s/\+dfsg\.\d+$//" https://github.com/trinitronx/range2cidr.git \
+  refs/tags/distribution/range2cidr-v([\d\.]+) debian uupdate
 
