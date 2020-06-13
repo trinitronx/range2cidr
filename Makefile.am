@@ -27,6 +27,7 @@ include $(top_srcdir)/build-aux/git-dist.mk
 SUBDIRS=src man
 RM=rm -f
 MAINTAINERCLEANFILES = .tarball-version .version
+EXTRA_DIST = README.md HACKING.md CHANGELOG.md .chglog/* .github/*
 
 # See build-aux/git-version-gen script for details on .*version file usage
 BUILT_SOURCES = $(top_srcdir)/.version
