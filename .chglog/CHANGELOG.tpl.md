@@ -4,12 +4,18 @@
 
 > {{ datetime "2006-01-02" .Tag.Date }}
 
+{{ if .CommitGroups -}}
 {{ range .CommitGroups -}}
 ### {{ .Title }}
 
 {{ range .Commits -}}
-* {{ .Subject }}
+* {{ if .Scope }}**{{ .Scope }}:** {{ end }}{{ .Subject }}
 {{ end }}
+{{ end -}}
+{{ else -}}
+{{ range .Commits -}}
+* {{ .Header }}
+{{ end -}}
 {{ end -}}
 
 {{- if .RevertCommits -}}
