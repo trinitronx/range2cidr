@@ -48,6 +48,10 @@ jobs:
     - name: Install Autoconf + Build dependencies
       run: |
         sudo apt update
+        sudo apt-cache search libboost-dev
+        sudo apt-cache show libboost-dev
+        sudo apt-cache policy libboost-dev
+        sudo apt-cache madison libboost-dev
         sudo apt install -y autoconf-archive pkg-config libboost-dev libpopt-dev
 
     - run: |
