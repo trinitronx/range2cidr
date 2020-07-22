@@ -48,7 +48,7 @@ jobs:
     - name: Install Autoconf + Build dependencies
       run: |
         sudo apt update
-        sudo apt install -y autoconf-archive pkg-config libstdc++-dev libboost1.71-dev libpopt-dev
+        sudo apt install -y autoconf-archive pkg-config libboost-dev libpopt-dev
 
     - run: |
         ./bootstrap.sh
