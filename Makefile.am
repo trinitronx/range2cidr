@@ -29,7 +29,7 @@ RM=rm -f
 MAINTAINERCLEANFILES = .tarball-version .version
 EXTRA_DIST = README.md HACKING.md CHANGELOG.md \
 			 build-aux/git-version-gen \
-			 .chglog/* .github/*
+			 .chglog/ .github/
 
 # See build-aux/git-version-gen script for details on .*version file usage
 BUILT_SOURCES = $(top_srcdir)/.version
