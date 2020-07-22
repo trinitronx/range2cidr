@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 # Print a version string.
 scriptversion=2012-09-25.20
 
