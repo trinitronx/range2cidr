@@ -47,8 +47,8 @@ jobs:
     #    uses a compiled language
     - name: Install Autoconf + Build dependencies
       run: |
-        apt update
-        apt install -y autoconf-archive pkg-config
+        sudo apt update
+        sudo apt install -y autoconf-archive pkg-config
 
     - run: |
         ./bootstrap.sh
